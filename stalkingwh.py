@@ -33,7 +33,7 @@ def automessage():
 	name = input('Enter the name of user or group : ')
 	msg = input('Enter the message : ')
 	count = int(input('Enter the count : '))
-	timesleep=input('Enter the time in minutes after which you want the message to be sent: ')
+	timesleep=input('Enter the time in minutes after which you want the message to be sent (0 to istant): ')
 	timesleep=int(timesleep)*60
 	time.sleep(int(timesleep))
 	user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
@@ -56,21 +56,19 @@ def stalkingacces():
 
 	try:
 	    while True:
+	    	time.sleep(1)
 	    	try:
 	    		acces=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
 	    		if online==0:
 	    			print(name,"è online alle", datetime.datetime.now())
-	    			online=1
-
-	    		
+	    			online=1		
 	    	except:
 	    		if online==1:
 	    			print(name,"è ofline alle", datetime.datetime.now())
-	    			print("---------------------------------------------------------")
+	    			print("------------------------------------------------------------------")
 	    			online=0
 	except KeyboardInterrupt:
 		sys.exit('Program quitted')
 		pass
-
 
 usage()
