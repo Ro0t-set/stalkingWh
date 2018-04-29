@@ -5,8 +5,10 @@ from selenium import webdriver
 import time
 import datetime
 from sys import exit
+from colorama import init
+from colorama import Fore, Back, Style
 import os
-
+init()
 cwd = os.getcwd()
 driver = webdriver.Chrome(cwd+'/chromedriver')
 
@@ -16,11 +18,13 @@ driver.get('http://web.whatsapp.com')
 
 def usage():
 	
-	print("Usage: help\n")
-	print("Options:")
+	print(Fore.RED + "Usage: help\n") 
+	print(Style.RESET_ALL)
+	print(Fore.YELLOW + "Options:")
 	print("1      --Send automatically a message")
 	print("2      --List of acces")
 	options = input('Enter options:\n')
+
 	if options=="1":
 		automessage()
 	if options=="2":
@@ -29,12 +33,15 @@ def usage():
 		if options == "help":
 			help()
 		else:	
-			print ("Please select a valid option!\n")
+			print(Style.RESET_ALL)
+			print(Back.RED + "Please select a valid option!")
+			print(Style.RESET_ALL)
 			time.sleep(2)
+			os.system('clear')
 			usage()	
 
-
-input('---Scan Qr code, then press enter---\n')
+print(Style.RESET_ALL)
+input(Fore.RED + '---Scan Qr code, then press enter---\n')
 
 
 def automessage():
@@ -55,7 +62,7 @@ def automessage():
 
 
 def stalkingacces():
-	name = input('Enter user name : ')
+	name = input(Fore.GREEN + 'Enter user name : ')
 	online=0
 	user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
 	user.click()
@@ -67,7 +74,8 @@ def stalkingacces():
 	    	try:
 	    		acces=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
 	    		if online==0:
-	    			print(name,"Online at:", datetime.datetime.now())
+	    			print(Style.RESET_ALL)
+	    			print(Fore.GREEN + name,"Online at:", datetime.datetime.now())
 	    			online=1
 
 	    		
@@ -77,14 +85,17 @@ def stalkingacces():
 	    			print("---------------------------------------------------------")
 	    			online=0
 	except KeyboardInterrupt:
+		deinit()
 		print("Program quitted")
 		exit(0)
 		pass
+		
+		
 def help():
-	print("stolkingWh(beta-unstable)")
+	print(Fore.RED + "stolkingWh(beta-unstable)")
 	print("Developed by Tommaso Patriti")
 	print("No helps right now, retry in the next version! :)\n")
-	time.sleep(3)
+	time.sleep(1)
 	usage()
 
 usage()
