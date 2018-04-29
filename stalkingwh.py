@@ -11,12 +11,25 @@ cwd = os.getcwd()
 driver = webdriver.Chrome(cwd+'/chromedriver')
 
 driver.get('http://web.whatsapp.com')
+
+
+
+def usage():
+	print("Usage: stolkingWh <options>\n")
+	print("Options:")
+	print("1        send automatically a message")
+	print("2        list of acces")
+	options = input('Enter options:')
+	if options=="1":
+		automessage()
+	if options=="2":
+		stalkingacces()
+
+
 input('Enter anything after scanning QR code')
 
-print("1 to autowrite message, 2 to stolk acces...")
-chose = input('[1-2]:')
 
-if chose=="1":
+def automessage():
 	name = input('Enter the name of user or group : ')
 	msg = input('Enter the message : ')
 	count = int(input('Enter the count : '))
@@ -33,7 +46,7 @@ if chose=="1":
 	    driver.find_element_by_class_name('_2lkdt').click()
 
 
-elif chose=="2":
+def stalkingacces():
 	name = input('Enter the name of user : ')
 	online=0
 	user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
@@ -59,5 +72,5 @@ elif chose=="2":
 		sys.exit('Program quitted')
 		pass
 
-else:
-	print("chose not valid")
+
+usage()
