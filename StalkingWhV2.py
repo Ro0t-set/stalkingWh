@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 #Sviluppato da Tommaso Patriti (-Ro0t) 
 
 
@@ -75,13 +77,13 @@ def stalkingacces():
 	    		acces=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
 	    		if online==0:
 	    			print(Style.RESET_ALL)
-	    			print(Fore.GREEN + name,"Online at:", datetime.datetime.now())
+	    			print(Fore.GREEN + name,"Online at:", datetime.datetime.now().strftime("%y-%m-%d, %H:%M"))
 	    			online=1
 
 	    		
 	    	except:
 	    		if online==1:
-	    			print(name,"Offline at:", datetime.datetime.now())
+	    			print(name,"Offline at:", datetime.datetime.now().strftime("%y-%m-%d, %H:%M"))
 	    			print("---------------------------------------------------------")
 	    			online=0
 	except KeyboardInterrupt:
