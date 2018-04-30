@@ -2,7 +2,7 @@
 
 #Sviluppato da Tommaso Patriti (-Ro0t) 
 
-
+import sqlite3
 from selenium import webdriver
 import time
 import datetime
@@ -10,9 +10,13 @@ from sys import exit
 from colorama import init
 from colorama import Fore, Back, Style
 import os
+from acces import Acces
 init()
 cwd = os.getcwd()
 driver = webdriver.Chrome(cwd+'/chromedriver')
+
+conn = sqlite3.connect('acces.db')
+c = conn.cursor()
 
 driver.get('http://web.whatsapp.com')
 
@@ -25,13 +29,16 @@ def usage():
 	print(Fore.YELLOW + "Options:")
 	print("1      --Send automatically a message")
 	print("2      --List of acces")
+	print("3      --Stalking all (beta)")
 	options = input('Enter options:\n')
 
 	if options=="1":
 		automessage()
-	if options=="2":
+	elif options=="2":
 		stalkingacces()
-	if options!="1"or"2":
+	elif options=="3":
+		stalkingall()
+	if options!="1"or"2"or"3":
 		if options == "help":
 			help()
 		else:	
@@ -73,9 +80,16 @@ def stalkingacces():
 
 	try:
 	    while True:
+	    	time.sleep(2)
 	    	try:
 	    		acces=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
 	    		if online==0:
+	    			onlinedate=datetime.datetime.now().strftime("%y-%m-%d, %H:%M")
+	    			complilation=Acces(name,1,onlinedate)
+	    			c.execute("INSERT INTO acces VALUES('{}', '{}', '{}')".format(complilation.name, complilation.state, complilation.accesdate))
+	    			conn.commit()
+
+
 	    			print(Style.RESET_ALL)
 	    			print(Fore.GREEN + name,"Online at:", datetime.datetime.now().strftime("%y-%m-%d, %H:%M"))
 	    			online=1
@@ -83,14 +97,73 @@ def stalkingacces():
 	    		
 	    	except:
 	    		if online==1:
+	    			onlinedate=datetime.datetime.now().strftime("%y-%m-%d, %H:%M")
+	    			complilation=Acces(name,0,onlinedate)
+	    			c.execute("INSERT INTO acces VALUES('{}', '{}', '{}')".format(complilation.name, complilation.state, complilation.accesdate))
+	    			conn.commit()
+
+
+
 	    			print(name,"Offline at:", datetime.datetime.now().strftime("%y-%m-%d, %H:%M"))
 	    			print("---------------------------------------------------------")
 	    			online=0
 	except KeyboardInterrupt:
 		deinit()
+		conn.close()
 		print("Program quitted")
 		exit(0)
 		pass
+
+
+def stalkingall():
+	name1 = input('Enter user name 1: ')
+	name2 = input('Enter user name 2: ')
+	instant=0
+
+
+
+	try:
+	    while True:
+	    	time.sleep(30)
+	    	try:
+	    		user1 = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name1))
+	    		user1.click()
+	    		try:
+	    			acces1=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
+	    			online1=datetime.datetime.now().strftime("%M")
+	    			online1=int(online1)
+	    		except:
+	    			pass
+
+
+	    		time.sleep(5)
+	    		user2 = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name2))
+	    		user2.click()
+
+	    		try:
+	    			acces2=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
+	    			online2=datetime.datetime.now().strftime("%M")
+	    			online2=int(online2)
+	    		except:
+	    			pass
+
+
+	    		if online1==online2:
+	    			instant=instant+1
+	    		else:
+	    			instant=instant-1
+
+	    	except:
+	    		pass
+
+	except KeyboardInterrupt:
+		deinit()
+		print("Program quitted")
+		exit(0)
+		pass
+
+
+
 		
 		
 def help():
