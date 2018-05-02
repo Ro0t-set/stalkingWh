@@ -36,12 +36,14 @@ import time
 def index(request):
     cwd = os.getcwd()
     driver = webdriver.Chrome(cwd+'/chromedriver')
+    driver.get('http://web.whatsapp.com')
+
     def qrCodeRead():
-        driver.get('http://web.whatsapp.com')
         time.sleep(3)
         qrCode = driver.find_element_by_class_name('_2EZ_m')
         qrCodeHtml=qrCode.get_attribute('innerHTML')
         return qrCodeHtml
+    qrCodeRead()
 
     def stalkingacces():
     	name = input(Fore.GREEN + 'Enter user name : ')
@@ -64,7 +66,6 @@ def index(request):
     	except KeyboardInterrupt:
     		conn.close()
 
-    return ({'onlinedate':onlinedate, 'ofinedate':ofinedate})
+    #return ({'onlinedate':onlinedate, 'ofinedate':ofinedate})
 
-
-    return render(request, 'index.html', {'qrCodeRead':qrCodeRead,'onlinedate':onlinedate, 'ofinedate':ofinedate})
+    return render(request, 'index.html', {'qrCodeRead':qrCodeRead,})
