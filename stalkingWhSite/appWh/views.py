@@ -35,9 +35,41 @@ import math
 def index(request):
     cwd = os.getcwd()
     driver = webdriver.Chrome(cwd+'/chromedriver')
-    driver.get('http://web.whatsapp.com')
-    qrCode = driver.find_element_by_class_name('_2EZ_m')
-    qrCodeHtml=qrCode.get_attribute('innerHTML')
+    def qrCodeRead():
+        driver.get('http://web.whatsapp.com')
+        qrCode = driver.find_element_by_class_name('_2EZ_m')
+        qrCodeHtml=qrCode.get_attribute('innerHTML')
+        return qrCodeHtml
+
+    qrCodeRead()
 
 
-    return render(request, 'index.html', {'qrCodeHtml':qrCodeHtml})
+
+    def stalkingacces():
+    	name = input(Fore.GREEN + 'Enter user name : ')
+    	online=0
+    	user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
+    	user.click()
+    	time.sleep(5)
+    	try:
+    	    while True:
+    	    	time.sleep(2)
+    	    	try:
+    	    		acces=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
+    	    		if online==0:
+    	    			onlinedate=datetime.datetime.now().strftime("%y-%m-%d, %H:%M")
+    	    			print(Style.RESET_ALL)
+    	    			print(Fore.GREEN + name,"Online at:", datetime.datetime.now().strftime("%y-%m-%d, %H:%M"))
+    	    			online=1
+    	    	except:
+    	    		if online==1:
+    	    			onlinedate=datetime.datetime.now().strftime("%y-%m-%d, %H:%M")
+    	    			print(name,"Offline at:", datetime.datetime.now().strftime("%y-%m-%d, %H:%M"))
+    	    			online=0
+    	except KeyboardInterrupt:
+
+    		conn.close()
+    		print("Program quitted")
+    		pass
+
+    return render(request, 'index.html', {'qrCodeRead':qrCodeRead})
