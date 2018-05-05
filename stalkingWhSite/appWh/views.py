@@ -34,12 +34,18 @@ import time
 
 
 def index(request):
+    dinamic=0
+    while dinamic<10:
+        dinamic=dinamic+1
+
+
+
     cwd = os.getcwd()
     driver = webdriver.Chrome(cwd+'/chromedriver')
     driver.get('http://web.whatsapp.com')
 
     def qrCodeRead():
-        time.sleep(3)
+        time.sleep(1.5)
         qrCode = driver.find_element_by_class_name('_2EZ_m')
         qrCodeHtml=qrCode.get_attribute('innerHTML')
         return qrCodeHtml
@@ -66,6 +72,8 @@ def index(request):
     	except KeyboardInterrupt:
     		conn.close()
 
+
+
     #return ({'onlinedate':onlinedate, 'ofinedate':ofinedate})
 
-    return render(request, 'index.html', {'qrCodeRead':qrCodeRead,})
+    return render(request, 'index.html', {'qrCodeRead':qrCodeRead, 'dinamic':dinamic})
