@@ -1,6 +1,33 @@
+ {% load staticfiles %}{% block content %}
 
 <html>
+
+
+  <head>
+    <!-- include js files -->
+    <script type="text/javascript" src="../static/main.js"></script>
+    <!--include css files -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <!-- include bootstrap files -->
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap-grid.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0A-dist/css/bootstrap-grid.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap-grid.min.css.map' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap-reboot.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap-reboot.css.map' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap-reboot.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap-reboot.min.css.map' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap.css.map' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap.min.css.map' %}">
+
+</head>
+
 <body>
+  <div></div>
 {{qrCodeRead |safe}}
 </body>
+
+
 </html>
+{% endblock %}
