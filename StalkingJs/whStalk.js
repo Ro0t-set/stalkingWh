@@ -1,13 +1,14 @@
 var webdriver =require('selenium-webdriver')
-driver = new webdriver.Builder().forBrowser('chrome').build();
-var term = require( 'terminal-kit' ).terminal ;
+	driver = new webdriver.Builder().forBrowser('chrome').build();
 
-term.grabInput() ;
+	var term = require( 'terminal-kit' ).terminal ;
 
-driver.get('http://web.whatsapp.com')
+	term.grabInput() ;
 
-    .then(_ =>
-        driver.findElement(By.title('name')).sendKeys('webdriver', Key.RETURN))
+	driver.get('http://web.whatsapp.com')
+
+	    .then(_ =>
+	        driver.findElement(By.title('name')).sendKeys('webdriver', Key.RETURN))
 
 
-    .then(_ => driver.quit());
+	    .then(_ => driver.quit());
