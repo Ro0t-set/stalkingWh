@@ -1,0 +1,68 @@
+ {% load staticfiles %}{% block content %}
+
+<html>
+
+
+  <head>
+    <!-- include js files -->
+    <script type="text/javascript" src="../static/main.js"></script>
+    <!--include css files -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <!-- include bootstrap files -->
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap-grid.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap-grid.min.css.map' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap-reboot.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap-reboot.css.map' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap-reboot.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap-reboot.min.css.map' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap.css.map' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0-dist/css/bootstrap.min.css.map' %}">
+
+</head>
+
+<body>
+
+  <br>
+  <!--MARK: TITLE AND HEADING-->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <h1 class="title">Stalking Whatsapp</h1>
+      </div>
+      <div class="col.sm">
+        <form method="POST">
+          {% csrf_token %}
+          <button onclick="myFunction()" class="btn btn-info">POST REQUEST</button>
+      </form>
+      </div>
+    </div>
+  </div>
+  <!--MARK: QR CODE-->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        {{qrCodeRead |safe}}
+      </div>
+      <div class= "col-sm">
+        <p id="jsonData"></p>
+      </div>
+    </div>
+  </div>
+  <script>
+  function myFunction() {
+    var request = new XMLHttpRequest();
+    request.open('POST', 'http://127.0.0.1:8000/');
+    request.onload = function() {
+      
+    };
+    request.send();
+  }
+  </script>
+
+</body>
+
+
+</html>
+{% endblock %}
