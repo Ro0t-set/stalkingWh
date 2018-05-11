@@ -43,24 +43,25 @@
   <div class="container">
     <div class="row">
       <div class="col-sm">
-        {{qrCodeRead |safe}}
+        {{randomN |safe}}
       </div>
       <div class= "col-sm">
         <p id="jsonData"></p>
       </div>
     </div>
   </div>
+  {% block javascript %}
   <script>
   function myFunction() {
     var request = new XMLHttpRequest();
     request.open('POST', 'http://127.0.0.1:8000/');
     request.onload = function() {
-      
+
     };
     request.send();
   }
   </script>
-
+{% endblock %}
 </body>
 
 

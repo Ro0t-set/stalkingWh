@@ -34,7 +34,7 @@ import sys
 from selenium import webdriver
 import math
 import time
-
+import random
 
 def stalk(request):
     if request.method == 'GET':
@@ -43,33 +43,41 @@ def stalk(request):
         return JsonResponse({'data': 'foo'})
 
 def index(request):
-    cwd = os.getcwd()
-    driver = webdriver.Chrome(cwd+'/chromedriver')
-    driver.get('http://web.whatsapp.com')
-    if request.method == 'POST':
-        def qrCodeRead():
-            time.sleep(3)
-            qrCode = driver.find_element_by_class_name('_2EZ_m')
-            qrCodeHtml=qrCode.get_attribute('innerHTML')
-            return qrCodeHtml
 
-        read = qrCodeRead()
-        return render(request, 'index.html', {'qrCodeRead': read})
-    else:
-        cwd = os.getcwd()
-        driver = webdriver.Chrome(cwd+'/chromedriver')
-        driver.get('http://web.whatsapp.com')
+    def randomN():
+        randomn=random.random()
+        print(randomn)
+        return randomn
 
-        #offlinedate = ""
-        #onlinedate = ""
-
-        def qrCodeRead():
-            time.sleep(3)
-            qrCode = driver.find_element_by_class_name('_2EZ_m')
-            qrCodeHtml=qrCode.get_attribute('innerHTML')
-            return qrCodeHtml
-
-        qrCodeRead()
+    randomN()
+    return render(request, 'index.html', {'randomN': randomN})
+    # cwd = os.getcwd()
+    # driver = webdriver.Chrome(cwd+'/chromedriver')
+    # driver.get('http://web.whatsapp.com')
+    # if request.method == 'POST':
+    #     def qrCodeRead():
+    #         time.sleep(5)
+    #         qrCode = driver.find_element_by_class_name('_2EZ_m')
+    #         qrCodeHtml=qrCode.get_attribute('innerHTML')
+    #         return qrCodeHtml
+    #
+    #     read = qrCodeRead()
+    #     return render(request, 'index.html', {'qrCodeRead': read})
+    # else:
+    #     cwd = os.getcwd()
+    #     driver = webdriver.Chrome(cwd+'/chromedriver')
+    #     driver.get('http://web.whatsapp.com')
+    #
+    #     #offlinedate = ""
+    #     #onlinedate = ""
+    #
+    #     def qrCodeRead():
+    #         time.sleep(3)
+    #         qrCode = driver.find_element_by_class_name('_2EZ_m')
+    #         qrCodeHtml=qrCode.get_attribute('innerHTML')
+    #         return qrCodeHtml
+    #
+    #     qrCodeRead()
         #def nameStalingAcces():
             #time.sleep(10)
             #name = "Tommaso Patriti"
@@ -89,5 +97,3 @@ def index(request):
                 #if online==1:
                     #offlinedate=datetime.datetime.now().strftime("%y-%m-%d, %H:%M")
                     #online=0
-
-        return render(request, 'index.html', {'qrCodeRead': qrCodeRead})
