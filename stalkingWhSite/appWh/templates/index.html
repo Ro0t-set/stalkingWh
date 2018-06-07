@@ -1,8 +1,18 @@
  {% load staticfiles %}{% block content %}
 <html>
 <body>
-{{qrCodeRead |safe}}
-{{dinamic}}
+  {{qrCodeRead |safe}}
+  {{dinamic}}
+  <form method="POST" onsubmit="responseDidRender">
+    <input type="submit">
+  </form>
 </body>
+  <script>
+
+
+    function responseDidRender(event) {
+      event.preventDefault()
+    }
+  </script>
 </html>
 {% endblock %}

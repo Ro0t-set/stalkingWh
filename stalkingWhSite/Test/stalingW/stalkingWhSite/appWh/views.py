@@ -35,7 +35,7 @@ from selenium import webdriver
 import math
 import time
 import random
-
+from django.template.context_processors import csrf
 def stalk(request):
     if request.method == 'GET':
         return render(request, 'stalk.html')
@@ -43,14 +43,27 @@ def stalk(request):
         return JsonResponse({'data': 'foo'})
 
 def index(request):
-
+    c = {}
+    c.update(csrf(request))
+     # ... view code here
     def randomN():
         randomn=random.random()
         print(randomn)
         return randomn
 
-    randomN()
-    return render(request, 'index.html', {'randomN': randomN})
+    randomNumber = randomN()
+    if request.method == 'POST':
+
+        print("success!!")
+        time.sleep(3)
+        return HttpResponse(
+            json.dumps({'random': randomNumber}),
+            c
+
+        )
+
+
+    return render(request, 'index.html', {'randomN': randomN}, c)
     # cwd = os.getcwd()
     # driver = webdriver.Chrome(cwd+'/chromedriver')
     # driver.get('http://web.whatsapp.com')

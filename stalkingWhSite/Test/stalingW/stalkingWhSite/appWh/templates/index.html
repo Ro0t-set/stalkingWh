@@ -32,10 +32,6 @@
         <h1 class="title">Stalking Whatsapp</h1>
       </div>
       <div class="col.sm">
-        <form method="POST">
-          {% csrf_token %}
-          <button onclick="myFunction()" class="btn btn-info">POST REQUEST</button>
-      </form>
       </div>
     </div>
   </div>
@@ -51,15 +47,59 @@
     </div>
   </div>
   {% block javascript %}
+  <script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
   <script>
+
   function myFunction() {
-    var request = new XMLHttpRequest();
-    request.open('POST', 'http://127.0.0.1:8000/');
-    request.onload = function() {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue =   decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+        }
+      });
+      $.ajax({
+        beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+         },
+
+        url: 'http://127.0.0.1:8000/',
+        data: {
+
+        },
+        method: 'POST',
+        dataType: 'json',
+        success: function (data) {
+          console.log("success");
+          document.getElementById('jsonData').innerHTML += JSON.stringify(data) + '<br>';
+
+        }
+      });
 
     };
-    request.send();
-  }
+    setInterval(myFunction, 3000);
   </script>
 {% endblock %}
 </body>
