@@ -36,6 +36,11 @@ import math
 import time
 import random
 from django.template.context_processors import csrf
+cwd = os.getcwd()
+driver = webdriver.Chrome(cwd+'/chromedriver')
+driver.get('http://web.whatsapp.com')
+
+
 def stalk(request):
     if request.method == 'GET':
         return render(request, 'stalk.html')
@@ -43,27 +48,47 @@ def stalk(request):
         return JsonResponse({'data': 'foo'})
 
 def index(request):
+
     c = {}
     c.update(csrf(request))
      # ... view code here
-    def randomN():
-        randomn=random.random()
-        print(randomn)
-        return randomn
 
-    randomNumber = randomN()
+    def stalkingacces():
+
+        try:
+            if online==0:
+                print("2")
+        except:
+            online=5
+
+        try:
+            acces=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
+            if online==0:
+                statedate=datetime.datetime.now().strftime("online: %y-%m-%d, %H:%M")
+                online=1
+                print("online")
+                return(statedate)
+        except:
+            if online==1:
+                statedate=datetime.datetime.now().strftime("ofline: %y-%m-%d, %H:%M")
+                online=0
+                print("ofline")
+                return(statedate)
+
+    StalkingAcces=stalkingacces()
+
     if request.method == 'POST':
 
         print("success!!")
         time.sleep(3)
         return HttpResponse(
-            json.dumps({'random': randomNumber}),
+            json.dumps(StalkingAcces),
             c
 
         )
 
 
-    return render(request, 'index.html', {'randomN': randomN}, c)
+    return render(request, 'index.html', {'stalkingacces': stalkingacces}, c)
     # cwd = os.getcwd()
     # driver = webdriver.Chrome(cwd+'/chromedriver')
     # driver.get('http://web.whatsapp.com')
