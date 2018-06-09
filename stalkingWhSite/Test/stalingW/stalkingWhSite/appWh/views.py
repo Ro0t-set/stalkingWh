@@ -59,7 +59,7 @@ def index(request):
             if online==0:
                 print("2")
         except:
-            online=5
+            online=0
 
         try:
             acces=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
