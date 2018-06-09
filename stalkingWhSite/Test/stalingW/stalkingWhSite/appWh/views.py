@@ -51,7 +51,7 @@ def index(request):
 
     c = {}
     c.update(csrf(request))
-     # ... view code here
+
 
     def stalkingacces():
 

@@ -31,49 +31,55 @@ import sys
 from selenium import webdriver
 import math
 import time
+import random
+import json
+from django.template.context_processors import csrf
 
+
+cwd = os.getcwd()
+driver = webdriver.Chrome(cwd+'/chromedriver')
+driver.get('http://web.whatsapp.com')
 
 def index(request):
-    dinamic=0
-    while dinamic<10:
-        dinamic=dinamic+1
 
 
+    c = {}
+    c.update(csrf(request))
 
-    cwd = os.getcwd()
-    driver = webdriver.Chrome(cwd+'/chromedriver')
-    driver.get('http://web.whatsapp.com')
-
-    def qrCodeRead():
-        time.sleep(1.5)
-        qrCode = driver.find_element_by_class_name('_2EZ_m')
-        qrCodeHtml=qrCode.get_attribute('innerHTML')
-        return qrCodeHtml
-    qrCodeRead()
 
     def stalkingacces():
-    	name = input(Fore.GREEN + 'Enter user name : ')
-    	online=0
-    	user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
-    	user.click()
-    	time.sleep(5)
-    	try:
-    	    while True:
-    	    	time.sleep(2)
-    	    	try:
-    	    		acces=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
-    	    		if online==0:
-    	    			onlinedate=datetime.datetime.now().strftime("%y-%m-%d, %H:%M")
-    	    			online=1
-    	    	except:
-    	    		if online==1:
-    	    			ofinedate=datetime.datetime.now().strftime("%y-%m-%d, %H:%M")
-    	    			online=0
-    	except KeyboardInterrupt:
-    		conn.close()
+
+        try:
+            if online==0:
+                print("2")
+        except:
+            online=0
+
+        try:
+            acces=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
+            if online==0:
+                statedate=datetime.datetime.now().strftime("online: %y-%m-%d, %H:%M")
+                online=1
+                print("online")
+                return(statedate)
+        except:
+            if online==1:
+                statedate=datetime.datetime.now().strftime("ofline: %y-%m-%d, %H:%M")
+                online=0
+                print("ofline")
+                return(statedate)
+        print("offline")
+
+    StalkingAcces=stalkingacces()
+
+    if request.method == 'POST':
+        print(StalkingAcces)
+        time.sleep(3)
+        return HttpResponse(
+            json.dumps(StalkingAcces),
+            c
+
+        )
 
 
-
-    #return ({'onlinedate':onlinedate, 'ofinedate':ofinedate})
-
-    return render(request, 'index.html', {'qrCodeRead':qrCodeRead, 'dinamic':dinamic})
+    return render(request, 'index.html', {'stalkingacces': stalkingacces}, c)
