@@ -49,32 +49,21 @@ def stalk(request):
 
 def index(request):
 
+
+
     c = {}
     c.update(csrf(request))
 
-
     def stalkingacces():
-
-        try:
-            if online==0:
-                print("2")
-        except:
-            online=0
-
         try:
             acces=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
-            if online==0:
-                statedate=datetime.datetime.now().strftime("online: %y-%m-%d, %H:%M")
-                online=1
-                print("online")
-                return(statedate)
+            statedate=datetime.datetime.now().strftime("online: %y-%m-%d, %H:%M")
+            print("online")
+            return(statedate)
         except:
-            if online==1:
-                statedate=datetime.datetime.now().strftime("ofline: %y-%m-%d, %H:%M")
-                online=0
+                statedate=datetime.datetime.now().strftime("offline: %y-%m-%d, %H:%M")
                 print("ofline")
                 return(statedate)
-
     StalkingAcces=stalkingacces()
 
     if request.method == 'POST':

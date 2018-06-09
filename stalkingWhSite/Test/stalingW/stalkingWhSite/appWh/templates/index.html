@@ -39,7 +39,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm">
-        {{stalkingacces |safe}}
+        {{stalkingacces|safe}}
       </div>
       <div class= "col-sm">
         <p id="jsonData"></p>
@@ -93,12 +93,26 @@
         dataType: 'json',
         success: function (data) {
           console.log("success");
-          document.getElementById('jsonData').innerHTML += JSON.stringify(data) + '<br>';
+          var state = String(JSON.stringify(data))
+          var BlockLoopState= state.charAt(2)
+
+
+          if (BoleanState==0 && BlockLoopState=="n" ){
+            document.getElementById('jsonData').innerHTML += state + '<br>';
+            BoleanState = 1
+          }
+
+          else if (BoleanState==1 && BlockLoopState=="f") {
+            document.getElementById('jsonData').innerHTML += state + '<br>';
+            BoleanState = 0
+          }
+
 
         }
       });
 
     };
+    var BoleanState= 1
     setInterval(myFunction, 3000);
   </script>
 {% endblock %}
