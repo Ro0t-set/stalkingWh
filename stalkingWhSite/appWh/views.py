@@ -66,7 +66,7 @@ def index(request):
             if online==1:
                 statedate=datetime.datetime.now().strftime("ofline: %y-%m-%d, %H:%M")
                 online=0
-                print("ofline")
+                print("offline")
                 return(statedate)
         print("offline")
 
