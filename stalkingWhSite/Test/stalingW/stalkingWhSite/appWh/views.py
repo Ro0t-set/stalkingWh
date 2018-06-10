@@ -36,20 +36,51 @@ import math
 import time
 import random
 from django.template.context_processors import csrf
-cwd = os.getcwd()
-driver = webdriver.Chrome(cwd+'/chromedriver')
-driver.get('http://web.whatsapp.com')
+
+def drivers():
+    cwd = os.getcwd()
+    driver = webdriver.Chrome(cwd+'/chromedriver')
+    driver.get('http://web.whatsapp.com')
+    return driver
 
 
-def stalk(request):
-    if request.method == 'GET':
-        return render(request, 'stalk.html')
-    else:
-        return JsonResponse({'data': 'foo'})
 
-def index(request):
+def qrCodeRead(request):
+    driver= drivers()
+    a=0
+    while a<20:
+        try:
+            qrCode = driver.find_element_by_class_name('_2EZ_m')
+            qrCodeHtml=qrCode.get_attribute('innerHTML')
+            a=20
+        except:
+            time.sleep(1)
+            a=a+1
+
+    return render(request, 'QRcode.html', {'qrCodeHtml':qrCodeHtml, 'driver':driver})
 
 
+
+def serchName(drivers):
+    drivers= driver
+    name= "Antonio Elettronico"
+    a=0
+    while a<20:
+        try:
+            userSerch = driver.find_element_by_class_name('jN-F5')
+            userSerch.click()
+            userSerch.send_keys(name)
+            a=20
+        except:
+            time.sleep(1)
+            a=a+1
+
+
+
+
+def index(request, drivers):
+    drivers= driver
+    serchName()
 
     c = {}
     c.update(csrf(request))
@@ -73,11 +104,10 @@ def index(request):
         return HttpResponse(
             json.dumps(StalkingAcces),
             c
-
         )
 
+    return render(request, 'index.html', {'stalkingacces': stalkingacces,}, c)
 
-    return render(request, 'index.html', {'stalkingacces': stalkingacces}, c)
     # cwd = os.getcwd()
     # driver = webdriver.Chrome(cwd+'/chromedriver')
     # driver.get('http://web.whatsapp.com')
@@ -98,13 +128,7 @@ def index(request):
     #     #offlinedate = ""
     #     #onlinedate = ""
     #
-    #     def qrCodeRead():
-    #         time.sleep(3)
-    #         qrCode = driver.find_element_by_class_name('_2EZ_m')
-    #         qrCodeHtml=qrCode.get_attribute('innerHTML')
-    #         return qrCodeHtml
-    #
-    #     qrCodeRead()
+
         #def nameStalingAcces():
             #time.sleep(10)
             #name = "Tommaso Patriti"
