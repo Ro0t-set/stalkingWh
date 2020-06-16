@@ -14,10 +14,8 @@ from acces import Acces
 init()
 cwd = os.getcwd()
 driver = webdriver.Chrome(cwd+'/chromedriver')
-
 conn = sqlite3.connect('acces.db')
 c = conn.cursor()
-
 driver.get('http://web.whatsapp.com')
 
 
@@ -29,7 +27,6 @@ def usage():
 	print(Fore.YELLOW + "Options:")
 	print("1      --Send automatically a message")
 	print("2      --List of acces")
-	print("3      --Stalking all (Now, does not work)")
 	options = input('Enter options:\n')
 
 	if options=="1":
@@ -61,31 +58,23 @@ def automessage():
 	timesleep=int(timesleep)*60
 	time.sleep(int(timesleep))
 
-	userSerch = driver.find_element_by_class_name('jN-F5 copyable-text selectable-text')
-	userSerch.click()
-	userSerch.send_keys(name)
-	timesleep(2)
-
-
 	user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
 	user.click()
 
+	time.sleep(2)
 
-	msg_box = driver.find_element_by_class_name('_2bXVy')
+	msg_box =  driver.find_element_by_class_name('_3uMse')
 
 	for i in range(count):
 	    msg_box.send_keys(msg)
-	    driver.find_element_by_class_name('_2lkdt').click()
+	    driver.find_element_by_class_name('_1U1xa').click()
 
 
 def stalkingacces():
-	name = input(Fore.GREEN + 'Enter user name : ')
+
 	online=0
-	user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
-	user.click()
-	time.sleep(5)
-
-
+	name =input("name (to write db): ")
+	print("click on chat")
 	try:
 	    while True:
 	    	time.sleep(2)
@@ -97,7 +86,7 @@ def stalkingacces():
 	    			c.execute("INSERT INTO acces VALUES('{}', '{}', '{}')".format(complilation.name, complilation.state, complilation.accesdate))
 	    			conn.commit()
 
-
+	    			print(name)
 	    			print(Style.RESET_ALL)
 	    			print(Fore.GREEN + name,"Online at:", datetime.datetime.now().strftime("%y-%m-%d, %H:%M"))
 	    			online=1
@@ -123,52 +112,6 @@ def stalkingacces():
 		pass
 
 
-def stalkingall():
-	name1 = input('Enter user name 1: ')
-	name2 = input('Enter user name 2: ')
-	instant=0
-
-
-
-	try:
-	    while True:
-	    	time.sleep(30)
-	    	try:
-	    		user1 = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name1))
-	    		user1.click()
-	    		try:
-	    			acces1=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
-	    			online1=datetime.datetime.now().strftime("%M")
-	    			online1=int(online1)
-	    		except:
-	    			pass
-
-
-	    		time.sleep(5)
-	    		user2 = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name2))
-	    		user2.click()
-
-	    		try:
-	    			acces2=driver.find_element_by_xpath('//span[@title = "{}"]'.format("online"))
-	    			online2=datetime.datetime.now().strftime("%M")
-	    			online2=int(online2)
-	    		except:
-	    			pass
-
-
-	    		if online1==online2:
-	    			instant=instant+1
-	    		else:
-	    			instant=instant-1
-
-	    	except:
-	    		pass
-
-	except KeyboardInterrupt:
-		deinit()
-		print("Program quitted")
-		exit(0)
-		pass
 
 
 
