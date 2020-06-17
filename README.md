@@ -2,7 +2,7 @@
 
 Beta 0.2
 
-<i>The tool is used to send messages after a pre-set time or to spam them for hundreds of times ... the second sever function to stalk and record a person's accesses.</i>
+<i>The tool is used to send messages after a pre-set time or to spam them for hundreds of times ... the second sever function to record a person's accesses.</i>
 
 <b>Requirements:</b>
 1) Latest version of google chrome
